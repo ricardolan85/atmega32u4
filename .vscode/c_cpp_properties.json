@@ -3,12 +3,13 @@
         {
             "name": "Win32",
             "includePath": [
-                "C:/Program Files (x86)/avr-gcc/include/**",
+                "C:/Program Files/avr8-gnu-toolchain/avr/include/**",
                 "${workspaceFolder}/"
             ],
-            "compilerPath": "C:/Program Files (x86)/avr-gcc/bin/avr-gcc.exe",
+            "compilerPath": "C:/Program Files/avr8-gnu-toolchain/bin/avr-gcc.exe",
             "defines": [
-                "__GNUC__"
+                "__AVR_ATmega32U4__",
+                "F_CPU=16000000UL"
             ]
         }
     ],

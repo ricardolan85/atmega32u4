@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "io.h": "c",
+        "cpufunc.h": "c",
+        "iom32u4.h": "c"
+    }
+}

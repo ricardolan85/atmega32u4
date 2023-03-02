@@ -1,12 +1,29 @@
-CFLAGS = -Os -DF_CPU=16000000UL -mmcu=atmega32u4
-SOURCES = main.c usbsimple.c
-TARGET = usb_avr
+PROJECT = atmega32u4
 
-all:
-	avr-gcc -o ${TARGET}.elf ${SOURCES} ${CFLAGS}
-	avr-objdump -d ${TARGET}.elf > ${TARGET}.dump
-	avr-objcopy -O ihex ${TARGET}.elf ${TARGET}.hex
-	avr-size --format=avr --mcu=atmega32u4 ${TARGET}.elf
+CC = avr-gcc
+CFLAGS = -Os -DF_CPU=16000000UL -D__AVR_ATmega32U4__ -mmcu=atmega32u4
+SRCS = main.c usbsimple.c
+OBJS = main.o usbsimple.o
+
+all: $(PROJECT).elf
+
+$(PROJECT).elf: ${OBJS}
+	$(CC) -o $(PROJECT).elf $(OBJS) $(CFLAGS)
+
+%.o: %.c
+	$(CC) -c $(CFLAGS) $< -o $@
+
+size: $(PROJECT).elf
+	avr-size --format=avr --mcu=atmega32u4 $(PROJECT).elf
+
+hex: $(PROJECT).elf
+	avr-objcopy -O ihex $(PROJECT).elf $(PROJECT).hex
+
+dump: $(PROJECT).elf
+	avr-objdump -d $(PROJECT).elf > $(PROJECT).dump
 
 clean:
-	rm -rf *.hex *.elf *~ ${TARGET}.dump
+	del *.o
+	del *.hex 
+	del *.elf
+	del *.dump
